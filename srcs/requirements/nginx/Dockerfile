@@ -8,7 +8,7 @@ RUN mkdir -p /etc/nginx/ssl
 
 RUN openssl req -x509 -nodes -out /etc/nginx/ssl/nginx.crt -keyout /etc/nginx/ssl/nginx.key -subj "/C=MA/ST=B/L=Khouribga/O=1337/CN=localhost"
 
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY /conf/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 443
 
