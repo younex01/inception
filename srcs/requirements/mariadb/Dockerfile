@@ -14,3 +14,4 @@ RUN service mariadb start && mysql -e "GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_US
     mysql -e "FLUSH PRIVILEGES;"
 RUN service mariadb start && mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"
 
+CMD ["cat"]
