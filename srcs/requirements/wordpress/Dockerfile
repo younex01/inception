@@ -15,4 +15,4 @@ COPY /tools/script.sh /home/
 
 WORKDIR /var/www/html
 
-CMD ["./home/script.sh"]
+ENTRYPOINT ["/home/script.sh"]
