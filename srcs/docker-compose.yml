@@ -12,6 +12,8 @@ services:
     restart: unless-stopped
     expose:
     - "3306"
+    volumes:
+      - DB:/var/lib/mysql
 
   nginx:
     container_name: nginx
@@ -26,6 +28,8 @@ services:
     restart: on-failure
     ports:
     - "443:443"
+    volumes:
+      - WordPress:/var/www/html
 
   wordpress:
     container_name: wordpress
@@ -38,7 +42,22 @@ services:
     restart: on-failure
     expose:
     - "9000"
-
+    volumes:
+      - WordPress:/var/www/html
 
 networks:
   inception:
+
+volumes:
+  WordPress:
+   driver: local
+   driver_opts:
+     type: "volume"
+     o: "bind"
+     device: "/home/kali/data"
+  DB:
+   driver: local
+   driver_opts:
+     type: "volume"
+     o: "bind"
+     device: "/home/kali/data"
