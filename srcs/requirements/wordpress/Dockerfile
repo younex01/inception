@@ -13,6 +13,11 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 
 COPY /tools/script.sh /home/
 
+RUN chmod +x /home/script.sh
+
 WORKDIR /var/www/html
 
-ENTRYPOINT ["/home/script.sh"]
+RUN /home/script.sh
+
+# CMD ["php-fpm8.2 -F"]
+ENTRYPOINT php-fpm8.2 -F

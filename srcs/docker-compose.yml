@@ -2,65 +2,58 @@ version: "3"
 
 services:
   mariadb:
+    build: ./requirements/mariadb
     container_name: mariadb
+    env_file: .env
+    image: mariadb_im
+    restart: always
+    ports:
+      - 3306:3306
     networks:
-      - inception
-    build:
-      context: requirements/mariadb
-      dockerfile: Dockerfile
-    env_file:
-      - .env
-    restart: unless-stopped
-    expose:
-      - "3306"
+      - net
     volumes:
-      - DB:/var/lib/mysql
-
+      - mariadb-data:/var/lib/mysql
   nginx:
+    build: ./requirements/nginx
     container_name: nginx
-    networks:
-      - inception
+    env_file: .env
+    image: nginx_im
     depends_on:
       - wordpress
-    build:
-      context: requirements/nginx
-      dockerfile: Dockerfile
-    env_file:
-      - .env
-    restart: on-failure
     ports:
-      - "443:443"
-    volumes:
-      - WordPress:/var/www/html
-
-  wordpress:
-    container_name: wordpress
-    networks:
-      - inception
-    build:
-      context: requirements/wordpress
-      dockerfile: Dockerfile
-    env_file:
-      - .env
+      - 443:443
     restart: on-failure
-    expose:
-      - "9000"
     volumes:
-      - WordPress:/var/www/html
-
+      - wpgx:/var/www/html
+    networks:
+      - net
+  wordpress:
+    build:  ./requirements/wordpress
+    container_name: wordpress
+    env_file: .env
+    image: wordpress_im
+    depends_on:
+      - mariadb
+    ports:
+      - 9000:9000
+    restart: always
+    volumes:
+      - wpgx:/var/www/html
+    networks:
+      - net
 networks:
-  inception:
-
+  net:
+    
 volumes:
-  WordPress:
+  mariadb-data:
     driver: local
     driver_opts:
-      type: "volume"
-      o: "bind"
-      device: "/home/kali/data"
-  DB:
+      type: volume
+      device: /home/kali/data/db
+      o: bind
+  wpgx:
     driver: local
     driver_opts:
-      type: "volume"
-      o: "bind"
-      device: "/home/kali/data"
+      type: volume
+      device: /home/kali/data/wp
+      o: bind
