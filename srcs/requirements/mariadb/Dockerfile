@@ -1,13 +1,11 @@
 FROM debian:bullseye
 
-RUN apt update && apt install -y mariadb-server 
+RUN apt-get update
 
-COPY /tools/script.sh /home
+RUN	apt-get install mariadb-server -y
 
-RUN chmod -R 777 /var/lib/mysql
+COPY tools/script.sh /home
 
-RUN chmod +x /home/script.sh
+RUN	chmod 777 /home/script.sh
 
-RUN /home/script.sh
-
-ENTRYPOINT mysqld_safe
+CMD ["/home/script.sh"]

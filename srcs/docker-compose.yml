@@ -49,11 +49,11 @@ volumes:
     driver: local
     driver_opts:
       type: volume
-      device: /home/kali/data/db
+      device: /home/yelousse/data/db
       o: bind
   wpgx:
     driver: local
     driver_opts:
       type: volume
-      device: /home/kali/data/wp
+      device: /home/yelousse/data/wp
       o: bind
