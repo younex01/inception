@@ -1,7 +1,6 @@
 #!/bin/bash
-
-sed -i 's/listen = \/run\/php\/php8.2-fpm.sock/listen = 9000/g' /etc/php/8.2/fpm/pool.d/www.conf
-# chown -R www-data:www-data /var/www/html/
+mkdir -p /run/php/php7.4-fpm
+sed -i 's@/run/php/php7.4-fpm.sock@9000@' /etc/php/7.4/fpm/pool.d/www.conf
 
 if [ ! -f "/var/www/html/wp-config.php" ];
 then
@@ -11,4 +10,4 @@ then
     wp user create $WP_USER $WP_USER_EMAIL --user_pass=$WP_PASSWORD --allow-root
 fi
 
-php-fpm8.2 -F
+php-fpm7.4 -F

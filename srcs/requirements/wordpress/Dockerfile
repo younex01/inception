@@ -1,4 +1,4 @@
-FROM debian:bookworm
+FROM debian:bullseye
 
 RUN apt-get update && apt-get upgrade
 
@@ -16,4 +16,4 @@ RUN chmod +x /home/script.sh
 
 WORKDIR /var/www/html
 
-CMD /home/script.sh
+CMD ["/home/script.sh"]
